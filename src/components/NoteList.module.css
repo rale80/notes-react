@@ -1,0 +1,11 @@
+.NoteList {
+	width: 30%;
+	background: #d3d3d3;
+	overflow: auto;
+}
+.NoteList li {
+	border-bottom: 1px dotted #888;
+	padding: 5px 0 5px 5px;
+	list-style: none;
+	cursor: pointer;
+}
