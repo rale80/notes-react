@@ -11,6 +11,7 @@
 @media screen and (max-width: 600px) {
 	.App {
 		width: 98%;
-		margin: 10px auto;
+		margin: auto;
+		height: 90vh;
 	}
 }

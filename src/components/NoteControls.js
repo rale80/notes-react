@@ -48,7 +48,9 @@ class Controls extends React.Component {
 	onDelete = e => {
 		e.preventDefault();
 		this.setState({ title: '', content: '' });
-		const noteToDelId = this.props.currentNote.id;
+		const noteToDelId = this.props.currentNote
+			? this.props.currentNote.id
+			: null;
 		this.props.deleteNote(noteToDelId);
 	};
 

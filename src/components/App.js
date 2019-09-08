@@ -21,11 +21,16 @@ class App extends React.Component {
 	};
 
 	handleAddNote = newNote => {
-		this.setState({
-			notes: [newNote, ...this.state.notes],
+		this.setState(prevState => ({
+			notes: [newNote, ...prevState.notes],
 			currentNote: newNote,
 			showAddForm: false
-		});
+		}));
+
+		// save note to local storage
+		let savedNotes = JSON.parse(localStorage.getItem('notes'));
+		savedNotes.unshift(newNote);
+		localStorage.setItem('notes', JSON.stringify(savedNotes));
 	};
 	handleEditNote = updatedNote => {
 		let tempNotes = [...this.state.notes];
@@ -38,6 +43,15 @@ class App extends React.Component {
 			showEditForm: false,
 			currentNote: updatedNote
 		});
+
+		// update to local storage
+		let savedNotes = JSON.parse(localStorage.getItem('notes'));
+		savedNotes = tempNotes.filter(note => {
+			return note.id !== updatedNote.id;
+		});
+		updatedNote.id = Date.now();
+		savedNotes.unshift(updatedNote);
+		localStorage.setItem('notes', JSON.stringify(savedNotes));
 	};
 	handleDeleteNote = delNoteId => {
 		let tempNotes = [...this.state.notes];
@@ -49,6 +63,13 @@ class App extends React.Component {
 			notes: [...tempNotes],
 			currentNote: tempNotes[0] ? tempNotes[0] : null
 		});
+
+		// delete note from local storage
+		let savedNotes = JSON.parse(localStorage.getItem('notes'));
+		savedNotes = tempNotes.filter(note => {
+			return note.id !== delNoteId;
+		});
+		localStorage.setItem('notes', JSON.stringify(savedNotes));
 	};
 
 	displayNoteHandler = id => {
@@ -56,6 +77,14 @@ class App extends React.Component {
 		const noteToDisplay = this.state.notes.find(note => note.id === id);
 		this.setState({ currentNote: noteToDisplay });
 	};
+
+	componentDidMount() {
+		if (localStorage.getItem('notes')) {
+			this.setState({ notes: JSON.parse(localStorage.getItem('notes')) });
+		} else {
+			localStorage.setItem('notes', JSON.stringify([]));
+		}
+	}
 
 	render() {
 		return (
