@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Note.module.css';
 
 const Note = props => {
 	const formatDate = dateStr => {
@@ -18,7 +19,11 @@ const Note = props => {
 	};
 
 	return (
-		<li className="note">
+		<li
+			onClick={props.displayNote}
+			className={
+				props.current && props.current.id === props.id ? styles.selected : null
+			}>
 			<h4>{props.note.title}</h4>
 			<small>{formatDate(props.note.id)}</small>
 			<input type="hidden" value={props.note.id} />
