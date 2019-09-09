@@ -63,6 +63,7 @@ class Controls extends React.Component {
 					<div className={styles.inputs}>
 						<input
 							type="text"
+							required
 							placeholder="Note Title"
 							value={this.state.title}
 							onChange={this.onTitleChange}
